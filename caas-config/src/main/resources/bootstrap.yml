@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: caas-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://gitbj.haihangyun.com/ch.sun/caas.git
+          search-paths:
+            - config-repo
+encrypt:
+  key-store:
+    location: classpath:server.jks
+    alias: cassKey
+    password: abc123
+    secret: 123abc
+server:
+  port: 8888
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.cluster:http://localhost:8761/eureka/}

@@ -1,0 +1,40 @@
+withEnv(['PATH=/usr/local/bin:$PATH']) {
+    node {
+            stage('代码更新') {
+                checkout scm: [$class: 'GitSCM', branches: [[name: '*/master']],
+                             userRemoteConfigs: [[url: 'http://gitbj.haihangyun.com/ch.sun/caas.git']]]
+            }
+            
+            stage('编译上传运行Jar到远程仓库') {
+                dir('caas-eureka/') {
+                    sh "mvn clean compile -Dmaven.test.skip=true deploy"
+                }
+            }
+        }
+		
+        stage('部署确认') {
+            timeout(time:1, unit:'HOURS') {
+                milestone()
+                input "现在执行部署？"
+            }
+        } 
+        
+        node {
+            lock(resource: 'CAAS_EUREKA', inversePrecedence: true) {
+    			stage('部署服务') {
+                    dir('caas-eureka/deploy/') {
+                        sh "bash ./buildImage.sh"
+                        sh "bash ./makesureImageReady.sh"
+                        sh "bash ./deployImageCluster.sh"
+                        sh "bash ./waitClusterDeployment.sh"
+                    }
+    				
+    			}
+                
+                milestone()
+            }
+			
+		}
+    
+}
+

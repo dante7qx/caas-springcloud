@@ -1,0 +1,28 @@
+services: 
+  eureka-1:
+    image: bjdhub.haihangyun.com/chsun/caas-eureka:latest
+    ports:
+    - port: 8761
+      protocol: TCP
+    environment:
+      SPRING_PROFILES_ACTIVE: cluster1
+      eureka_node2: test-eureka-2
+      eureka_node3: test-eureka-3
+  eureka-2:
+    image: bjdhub.haihangyun.com/chsun/caas-eureka:latest
+    ports:
+    - port: 8761
+      protocol: TCP
+    environment:
+      SPRING_PROFILES_ACTIVE: cluster2
+      eureka_node1: test-eureka-1
+      eureka_node3: test-eureka-3
+  eureka-3:
+    image: bjdhub.haihangyun.com/chsun/caas-eureka:latest
+    ports:
+    - port: 8761
+      protocol: TCP
+    environment:
+      SPRING_PROFILES_ACTIVE: cluster3
+      eureka_node1: test-eureka-1
+      eureka_node2: test-eureka-2

@@ -1,0 +1,58 @@
+withEnv(['PATH=/usr/local/bin:$PATH']) {
+    node {
+            stage('代码更新') {
+                checkout scm: [$class: 'GitSCM', branches: [[name: '*/master']],
+                             userRemoteConfigs: [[url: 'http://gitbj.haihangyun.com/ch.sun/caas.git']]]
+            }
+            
+            stage('代码检查') {
+                dir('caas-provider/') {
+                    sh "sonar-scanner -Dsonar.login='jenkins' -Dsonar.password='jenkins' -Dsonar.host.url=http://sonar.haihangyun.com"
+                }
+                dir('caas-provider/deploy/') {
+                    sh "bash ./checkSonarStatus.sh"
+                }
+            }
+            
+            stage('单元测试') {
+                dir('caas-provider/') {
+                    sh "mvn test"
+                }   
+            }
+            
+            stage('上传运行Jar到远程仓库') {
+                dir('caas-provider/') {
+                    sh "mvn deploy -Dmaven.test.skip=true"
+                }
+            }
+        }
+		
+        stage('部署确认') {
+            timeout(time:1, unit:'HOURS') {
+                milestone()
+                input "现在执行部署？"
+            }
+        } 
+        
+        node {
+            lock(resource: 'CAAS_PROVIDER', inversePrecedence: true) {
+    			stage('部署服务') {
+                    dir('caas-provider/deploy/') {
+                        sh "bash ./buildImage.sh"
+                        sh "bash ./makesureImageReady.sh"
+                        sh "bash ./deployImage.sh"
+                        sh "bash ./waitDeployment.sh"
+                    }
+    				
+    			}
+                
+                stage('接口测试') {
+                    echo '接口测试'
+                }
+                    
+                milestone()
+            }
+		}
+    
+}
+
