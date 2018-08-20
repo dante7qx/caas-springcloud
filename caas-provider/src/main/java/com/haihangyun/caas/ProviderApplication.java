@@ -16,15 +16,14 @@ public class ProviderApplication {
 		SpringApplication.run(ProviderApplication.class, args);
 	}
 	
-	@GetMapping("/")
+	@GetMapping("/msg")
 	public String test(HttpServletRequest request) {
-		String one = "LocalAddr -> " + request.getLocalAddr() + "<br/>";
-		String two = "RemoteAddr -> " + request.getRemoteAddr() + "<br/>";
-		String three = "RealIP -> " + getIpAddr(request) + "<br/>";
-		return one + two + three;
+		String one = "服务端： " + request.getLocalAddr() + "<br/>";
+		String two = "客户端： " + getIpAddr(request) + "<br/>";
+		return "服务提供者<br/>" + one + two;
 	}
 	
-	public static String getIpAddr(HttpServletRequest request) {  
+	private String getIpAddr(HttpServletRequest request) {  
         String ip = request.getHeader("X-Forwarded-For");  
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
             ip = request.getHeader("Proxy-Client-IP");  

@@ -1,28 +1,43 @@
+server:
+  port: 8010
+  servlet:
+    context-path: /caas
 spring:
   application:
     name: caas-gateway
   cloud:
     gateway:
-      
       discovery:
         locator:
           enabled: true
       routes:
-      - id: 163                     #网关路由到网易官网
+      - id: 163                  
         uri: http://www.163.com/
         predicates:
           - Path=/163/**
       - id: CAAS-PROVIDER
         uri: lb://CAAS-PROVIDER
         predicates:
-        - Path=/CAAS-PROVIDER/**
-server:
-  port: 8010
+        - Path=${server.servlet.context-path}/provider/**
+        filters:
+        - StripPrefix=2
+      - id: CAAS-CONSUMER
+        uri: lb://CAAS-CONSUMER
+        predicates:
+        - Path=${server.servlet.context-path}/consumer/**
+        filters:
+        - StripPrefix=2
 eureka:
   instance:
     prefer-ip-address: true
   client:
     serviceUrl:
       defaultZone: ${eureka.cluster:http://localhost:8761/eureka/}
-
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 30000
+
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
+    org.springframework.http.server.reactive: debug
+    org.springframework.web.reactive: debug
+    reactor.ipc.netty: debug

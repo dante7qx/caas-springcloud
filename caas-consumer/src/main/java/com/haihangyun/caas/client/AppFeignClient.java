@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient(name = "caas-provider", fallback = AppFeignClientFallback.class)
 public interface AppFeignClient {
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/msg", method = RequestMethod.GET)
 	public String getApp();
 
 }

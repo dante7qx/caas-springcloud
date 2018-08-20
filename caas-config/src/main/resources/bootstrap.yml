@@ -5,15 +5,9 @@ spring:
     config:
       server:
         git:
-          uri: http://gitbj.haihangyun.com/ch.sun/caas.git
+          uri: https://github.com/dante7qx/caas-springcloud.git
           search-paths:
             - config-repo
-encrypt:
-  key-store:
-    location: classpath:server.jks
-    alias: cassKey
-    password: abc123
-    secret: 123abc
 server:
   port: 8888
 eureka:
