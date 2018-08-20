@@ -1,13 +1,13 @@
 spring:
   application:
     name: caas-consumer
-#  cloud:
-#    config:
-#      profile: dev
-#      label: master
-#      discovery:
-#        enabled: true
-#        service-id: CAAS-CONFIG
+  cloud:
+    config:
+      profile: dev
+      label: master
+      discovery:
+        enabled: true
+        service-id: CAAS-CONFIG
 server:
   port: 8100
 eureka:
@@ -17,5 +17,3 @@ eureka:
     serviceUrl:
       defaultZone: ${eureka.cluster:http://localhost:8761/eureka/}
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 5000
-consumer:
-  info: '我是消费者'

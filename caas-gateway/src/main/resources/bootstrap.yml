@@ -1,6 +1,21 @@
 spring:
   application:
-    name: caas-getway
+    name: caas-gateway
+  cloud:
+    gateway:
+      
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: 163                     #网关路由到网易官网
+        uri: http://www.163.com/
+        predicates:
+          - Path=/163/**
+      - id: CAAS-PROVIDER
+        uri: lb://CAAS-PROVIDER
+        predicates:
+        - Path=/CAAS-PROVIDER/**
 server:
   port: 8010
 eureka:
@@ -9,7 +24,5 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${eureka.cluster:http://localhost:8761/eureka/}
-zuul:
-  routes:
-    caas-provider: /provider/**
-    caas-consumer: /consumer/**
+
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 30000

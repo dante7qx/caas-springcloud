@@ -1,8 +1,5 @@
 package com.haihangyun.caas;
 
-import java.util.Enumeration;
-import java.util.Iterator;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.SpringApplication;
@@ -21,12 +18,6 @@ public class ProviderApplication {
 	
 	@GetMapping("/")
 	public String test(HttpServletRequest request) {
-		/*
-		Enumeration<String> headerNames = request.getHeaderNames();
-		while(headerNames.hasMoreElements()) {
-			System.out.println("========" + headerNames.nextElement());
-		}
-		*/
 		String one = "LocalAddr -> " + request.getLocalAddr() + "<br/>";
 		String two = "RemoteAddr -> " + request.getRemoteAddr() + "<br/>";
 		String three = "RealIP -> " + getIpAddr(request) + "<br/>";

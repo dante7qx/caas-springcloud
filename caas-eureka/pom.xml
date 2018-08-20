@@ -7,7 +7,6 @@
 		<version>1.0</version>
 	</parent>
 	
-	<groupId>com.haihangyun.caas</groupId>
 	<artifactId>caas-eureka</artifactId>
 	<packaging>jar</packaging>
 	<name>caas-eureka</name>
@@ -15,7 +14,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-eureka-server</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
 	</dependencies>	
 
