@@ -64,12 +64,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<distributionManagement>
-		<repository>
-			<id>haihangyun-spirit</id>
-			<name>Releases</name>
-			<url>http://maven.haihangyun.com/content/repositories/Spirit-Central</url>
-		</repository>
-	</distributionManagement>
 </project>

@@ -1,10 +1,13 @@
-FROM bjdhub.haihangyun.com/chsun/spirit-java:8
-MAINTAINER Michael Dante <ch.sun@hnair.com>
+FROM java:8
+LABEL AUTHOR="Michael Dante <ch.sun@hnair.com>"
+
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 ENV APPS_HOME=/AppServer
 RUN mkdir -p $APPS_HOME/
 WORKDIR $APPS_HOME/
-ADD http://maven.haihangyun.com/content/repositories/Spirit-Central/com/haihangyun/caas/caas-config/1.0/caas-config-1.0.jar $APPS_HOME/app.jar
+ADD https://raw.githubusercontent.com/dante7qx/mvnrepo/master/caas-config-1.0.jar $APPS_HOME/app.jar
 
 RUN sh -c 'touch $APPS_HOME/app.jar'
 

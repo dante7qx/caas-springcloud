@@ -33,7 +33,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${eureka.cluster:http://localhost:8761/eureka/}
-hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 30000
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 8000
 
 logging:
   level:
