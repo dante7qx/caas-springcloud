@@ -1,5 +1,8 @@
 package com.haihangyun.caas;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +35,15 @@ public class ConsumerApplication {
 	private String info;
 	
 	@GetMapping("/")
-	public MsgVO technolog() {
+	public MsgVO technolog(HttpServletRequest request) throws UnknownHostException {
 		MsgVO msg = new MsgVO();
+		msg.setClientIP(getIpAddr(request));
+		msg.setServerIP(InetAddress.getLocalHost().toString());
 		msg.setInfo(info);
 		msg.setTechnologs(appFeignClient.getTechnolog());
 		return msg;
 	} 
+	
 	
 	@GetMapping("/msg")
 	@HystrixCommand
