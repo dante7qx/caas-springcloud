@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.haihangyun.caas.client.AppFeignClient;
+import com.haihangyun.caas.vo.MsgVO;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @SpringBootApplication
@@ -31,6 +32,14 @@ public class ConsumerApplication {
 	private String info;
 	
 	@GetMapping("/")
+	public MsgVO technolog() {
+		MsgVO msg = new MsgVO();
+		msg.setInfo(info);
+		msg.setTechnologs(appFeignClient.getTechnolog());
+		return msg;
+	} 
+	
+	@GetMapping("/msg")
 	@HystrixCommand
 	public String msg(HttpServletRequest request) {
 		String providerMsg = appFeignClient.getApp();;
