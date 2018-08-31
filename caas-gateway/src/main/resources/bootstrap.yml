@@ -14,7 +14,7 @@ spring:
       - id: 163                  
         uri: http://www.163.com/
         predicates:
-          - Path=/163/**
+        - Path=/163/**
       - id: CAAS-PROVIDER
         uri: lb://CAAS-PROVIDER
         predicates:
