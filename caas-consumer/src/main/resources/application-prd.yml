@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    config:
+      enabled: false
+      discovery:
+        enabled: false
+eureka:
+  client:
+    enabled: false
+consumer: 
+  info: '我是服务消费者'
+  provider: caas-provider
+  provider_path: localhost:8000
+ribbon:
+  eureka:
+    enabled: false

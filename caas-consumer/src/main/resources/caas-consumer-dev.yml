@@ -1,2 +1,3 @@
 consumer: 
-  info: '我是服务消费者'
+  info: '我是服务消费者 - Spring Cloud Config'
+  provider: caas-provider

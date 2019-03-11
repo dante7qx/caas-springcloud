@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    config:
+      enabled: true
+      profile: dev
+      label: master
+      discovery:
+        enabled: true
+        service-id: CAAS-CONFIG
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.cluster:http://localhost:8761/eureka/}
